@@ -25,7 +25,7 @@ function Checkbox({ checked, title, ...rest }: CheckboxProps) {
             : <View className="h-8 w-8 bg-zinc-800 rounded-lg items-center justify-center">
             </View>
         }
-        <Text className="text-white text-base ml-3">
+        <Text className="text-white text-base ml-3 font-semibold">
             { title }
         </Text>
 
