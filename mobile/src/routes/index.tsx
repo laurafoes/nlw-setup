@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import AppRoutes from './App.routes'
+import AppRoutes from './app.routes'
 
 function Routes() {
     return(

@@ -13,7 +13,7 @@ function AppRoutes() {
                 component={Home}
             />
             <Screen 
-                name="new habit"
+                name="newhabit"
                 component={NewHabit}
             />
             <Screen 
