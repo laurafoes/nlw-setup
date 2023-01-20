@@ -11,6 +11,7 @@ import {
 import Loading from "./src/components/Loading";
 import Home from "./src/screens/Home";
 import Header from "./src/components/Header";
+import Routes from "./src/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,7 +27,7 @@ export default function App() {
 
   return (
     <View className='flex-1'>
-        <Home />
+        <Routes />
         <StatusBar style="light" backgroundColor="transparent" translucent />
     </View>
   );
