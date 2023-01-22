@@ -33,7 +33,6 @@ function Home() {
             setIsLoading(true)
             const res = await api.get('summary')
             setSummary(res.data)
-            console.log(summary)
         } catch(error) {
             Alert.alert('Ops', 'Não foi possível carregar o sumário de hábitos.')
             console.log(error)
@@ -76,9 +75,6 @@ function Home() {
                                 const dayWithHabits = summary.find(day => {
                                     return dayjs(date).isSame(day.date, 'day')
                                 })
-
-                                console.log(dayWithHabits)
-
                                 return (
                                     <HabitDay 
                                         date={date}
