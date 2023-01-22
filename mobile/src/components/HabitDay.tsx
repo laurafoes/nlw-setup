@@ -10,16 +10,14 @@ export const DAY_SIZE = (Dimensions.get('screen').width / WEEK_DAYS) - (SCREEN_H
 
 interface HabitDayProps extends TouchableOpacityProps {
   amountOfHabits?: number,
-  amountOfCompleted?: number,
+  amountCompleted?: number,
   date: Date
 }
 
-function HabitDay({ amountOfHabits = 0, amountOfCompleted = 0, date, ...rest }: HabitDayProps) {
-
-  const amountAccomplishedPercentage = amountOfHabits > 0 ? generateProgressPercentage(amountOfHabits, amountOfCompleted) : 0
-
-  const today = dayjs().startOf('day').toDate()
-  const isCurrentDay = dayjs(date).isSame(today)
+function HabitDay({ amountOfHabits = 0, amountCompleted = 0, date, ...rest }: HabitDayProps) {
+  const amountAccomplishedPercentage = amountOfHabits > 0 ? generateProgressPercentage(amountOfHabits, amountCompleted) : 0
+  const today = dayjs().startOf('day').toDate();
+  const isCurrentDay = dayjs(date).isSame(today);
 
   return (
     <TouchableOpacity 
@@ -34,9 +32,9 @@ function HabitDay({ amountOfHabits = 0, amountOfCompleted = 0, date, ...rest }: 
           ["border-white border-4"] : isCurrentDay,
         } 
       )}
-        style={{ width: DAY_SIZE, height: DAY_SIZE }}
-        activeOpacity={0.7}
-        { ...rest }
+      style={{ width: DAY_SIZE, height: DAY_SIZE }}
+      activeOpacity={0.7}
+      {...rest}
     />
   )
 }
