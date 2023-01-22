@@ -1,6 +1,7 @@
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { Check } from "phosphor-react"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { api } from '../lib/axios'
 
 const availableWeekDays = [ 
     'Domingo', 
@@ -15,24 +16,42 @@ const availableWeekDays = [
 
 function NewHabitForm() {
     const [ title, setTitle ] = useState<string>('')
-    const [ weekdays, setWeekdays ] = useState<number[]>([])
+    const [ weekDays, setWeekDays ] = useState<number[]>([])
 
-    const createNewHabit = (e: React.FormEvent<HTMLFormElement>) => {
+    const createNewHabit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        
+    if(!title || weekDays.length === 0) {
+        return
+      }
+  
+      await api.post('habits', {
+        title,
+        weekDays
+      })
+  
+      setTitle('')
+      setWeekDays([])
+  
+      alert('Hábito criado com sucesso!')
     }
 
     const handleWeekdayToggle = (weekday: number) => {
-        if(weekdays.includes(weekday)) {
-            const removeSelectedWeekday = weekdays.filter(day => day !== weekday)
-            setWeekdays(removeSelectedWeekday)
+        if(weekDays.includes(weekday)) {
+            const removeSelectedWeekday = weekDays.filter(day => day !== weekday)
+            setWeekDays(removeSelectedWeekday)
         } else {
-                const addSelectedWeekday = [ ...weekdays, weekday ]
-                setWeekdays(addSelectedWeekday)
+                const addSelectedWeekday = [ ...weekDays, weekday ]
+                setWeekDays(addSelectedWeekday)
         }
     }
+    useEffect(() => {
+        console.log( title, weekDays)
+    })
 
     return (
-        <form className='w-full flex flex-col mt-6' onSubmit={(e) => createNewHabit(e)}>
+        <form className='w-full flex flex-col mt-6' onSubmit={createNewHabit}>
             <label htmlFor="title" className='font-semibold leading-tight'>
                 Qual seu comprometimento?
             </label>
@@ -41,6 +60,7 @@ function NewHabitForm() {
                 id="title"
                 placeholder="ex.: Exercícios, dormir bem, etc..."
                 className='p-4 rounded-lg mt-3 bg-zinc-800 text-white placeholder:text-zinc-400'
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 autoFocus
             />
@@ -53,6 +73,7 @@ function NewHabitForm() {
                             <Checkbox.Root 
                                 className="flex items-center gap-3 group"
                                 key={ weekday }
+                                checked={weekDays.includes(index)}
                                 onCheckedChange={() => handleWeekdayToggle(index)}
                             >
                                 <div className='h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-50 transition-colors group-focus:ring-2 group-focus:ring-violet-600 group-focus:ring-offset-2 group-focus:ring-offset-background'>
